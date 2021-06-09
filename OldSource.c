@@ -1,4 +1,12 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+﻿/*
+ID: 63011293
+Name: Raviphas Sananpanichkul
+Midterm Project
+C PROGRAMMING
+Teacher: Ukrit Watchareeruetai
+University: King Mongkut's Institute of Technology Ladkrabang
+*/
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
