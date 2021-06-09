@@ -1,5 +1,6 @@
 # QuizGame-RG-C-Project
 A command line Quiz Game that's very detailed <br>
+Use for my first year project
 # Target:
 1. All of the process is wrote in the Source file only which is terrible in term of Coding, so dividing it is a great idea<br>
 2. There are still some bugs for each process so it should be recheck and recode<br>
