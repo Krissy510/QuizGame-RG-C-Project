@@ -1,0 +1,7 @@
+(Score)-(All Q)-(Correct)-(Wrong)
+
+
+0-0-0-0
+
+Score = (All Q + Correct - Wrong)/2
+
