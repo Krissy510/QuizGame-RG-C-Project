@@ -239,7 +239,7 @@ int check_ban(char str[]) {
     }
     return 0;
 }
-int check_QandA(char fn[]) {
+int check_QandA(char fn[]) { // Confuse
     FILE* fp = fopen(fn, "r");
     while (fgets(read, array_length, fp) != NULL) {
         int check_for = 0;
@@ -254,7 +254,7 @@ int check_QandA(char fn[]) {
     }
     return 0;
 }
-int findvalinarr(int arr[], int size, int val) {
+int findvalinarr(int arr[], int size, int val) { // Confuse
     int i;
     for (i = 0; i < size; i++)
     {
