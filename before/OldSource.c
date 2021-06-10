@@ -44,6 +44,7 @@ void delay(int number_of_seconds)
     int milli_seconds = 1000 * number_of_seconds;
     // Storing start time
     clock_t start_time = clock();
+    
     // looping till required time is not achieved
     while (clock() < start_time + milli_seconds);
 }
@@ -147,13 +148,13 @@ int check_pass(char passw[]) { // check if password syntax is correct
     }
     int check[3] = { 0,0,0 }; //check for all 3 conditions
     for (int loop = 0; loop < size; loop++) {
-        if (islower(passw[loop]) != 0) { // check if the pass include 1 lowercase
+        if (islower(passw[loop]) == 1) { // check if the pass include 1 lowercase
             check[0]++;
         }
-        else if (isupper(passw[loop]) != 0) {  // check if the pass include 1 uppercase
+        else if (isupper(passw[loop]) == 1) {  // check if the pass include 1 uppercase
             check[1]++;
         }
-        else if (isdigit(passw[loop]) != 0) { // check if the pass include 1 digit
+        else if (isdigit(passw[loop]) == 1) { // check if the pass include 1 digit
             check[2]++;
         }
     }
