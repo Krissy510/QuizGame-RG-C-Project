@@ -6,8 +6,7 @@ void display_info(double a, int b,int c, int d){
 }
 
 int main(){
-    char password[256] = "";
-    take_password_reg(password);
-    printf("%s",password);
+    char username[256] = "Kris510", password[256] = "";
+    take_password_log(username, password);
     return 0;
 }

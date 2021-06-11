@@ -71,3 +71,20 @@ void guide() {
     printf("the answer of the question is and answer it.\nBut as I said the harder it is the rewarding it is.\n");
     printf("Therefore, this gamemode will give you up to double of the amount of score that you get by\nplaying normal quiz game.\n");
 }
+
+int user_choice(char *text, int min_val, int max_val) { //choice format with /back func
+    char choice[100];
+    while (1) {
+        printf("%s", text);
+        printf("If you want to go back enter '/back'\n");
+        gets(choice);
+        system("cls");
+        if (strcmp(choice, "/back") == 0)// if the user wants to go back
+            return -1;
+        if (strlen(choice) == 1) {
+            int check = atoi(choice);
+            if (check <= max_val && check >= min_val)
+                return check;
+        }
+    }
+}

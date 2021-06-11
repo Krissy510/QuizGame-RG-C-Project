@@ -81,3 +81,46 @@ int take_password_reg(char *return_password) {
         }
     }
 }
+
+int take_username_log(char *returnuser) { //Ask user username for login
+    while (1) {
+        color("reset");
+        printf("If you want to go back enter '/back'\n");
+        printf("Username:");
+        gets(returnuser);
+        system("cls");
+        if (strcmp(returnuser, "/back") == 0) // return user back to rlg
+            return -1;
+        else if (check_user_exist(returnuser) == 1 && check_contain_sp(returnuser) == 0)
+            break;
+        else{
+            color("red");
+            if (check_user_exist(returnuser) == 0)
+                printf("This user does not exist!\n");
+            else if (check_contain_sp(returnuser) == 1)
+                printf("Please use only alphabet or numbers.\n");
+        }
+    }
+    return 1; //Finished
+}
+
+int take_password_log(char username[], char return_password[]) { //Ask user password for login
+    while (1) {
+        printf("If you want to go back enter '/back'\n");
+        printf("Username:%s\n", username);
+        printf("Password:");
+        get_pass(return_password);
+        system("cls");
+        if (strcmp(return_password, "/back") == 0)
+            return -1;
+        else if(check_match(username,return_password) == 1){
+            break;
+        }
+        else{
+            color("red");
+            printf("Incorrect please try again");
+            color("reset");
+        }
+    }
+    return 1;
+}

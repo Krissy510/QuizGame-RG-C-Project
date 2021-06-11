@@ -6,22 +6,16 @@
 
 void checkessfile() { //Check if the essential file is there
     FILE* check1, * check2, * check3;
-    check1 = fopen("userdata.csv", "r");
+    check1 = fopen("userdata.txt", "r");
     check2 = fopen("topic.txt", "r");
-    check3 = fopen("admin.txt", "r");
     if (check1 == NULL) {
         check1 = fopen("userdata.csv", "w"); //if not create it
     }
     if (check2 == NULL) {
         check2 = fopen("topic.txt", "w");//if not create it
     }
-    if (check3 == NULL) {
-        check3 = fopen("admin.txt", "w");//if not create it
-        fprintf(check3, "ADMINSP\nAdmin1234");
-    }
     fclose(check1);
     fclose(check2);
-    fclose(check3);
 }
 
 int check_contain_sp(char str[]) { //check if there is any special characters in the str

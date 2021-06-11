@@ -9,7 +9,7 @@ int check_user_exist(char *user) { // check if the user is already exist or not
     FILE* fp;
     char buffer[ARRAY_SIZE], temp[ARRAY_SIZE];
     int find = 0;
-    fp = fopen("D:\\QuizGame-RG-C-Project\\userdata.csv", "r");
+    fp = fopen("userdata.txt", "r");
     while (1) {
         fscanf(fp,"%s",buffer);
         if(strcmp(buffer,user) == 0){
@@ -28,7 +28,7 @@ int check_match(char *username, char *password) { //check if user and passw matc
     FILE* fp;
     char buffer[ARRAY_SIZE], temp[ARRAY_SIZE];
     int find = 0;
-    fp = fopen("userdata.csv", "r");
+    fp = fopen("userdata.txt", "r");
     while (1) { // find the same username
         fscanf(fp,"%s",buffer);
         if(strcmp(buffer,username) == 0){
@@ -59,7 +59,7 @@ void load_score(char username[],double *score, int *allq, int *cq, int *wq) {
         return;
     }
     FILE* fp;
-    fp = fopen("userdata.csv", "r");
+    fp = fopen("userdata.txt", "r");
     while (1){
         fscanf(fp,"%s",buffer);
         if (strcmp(buffer, username) == 0){
