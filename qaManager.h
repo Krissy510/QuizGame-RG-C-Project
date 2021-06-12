@@ -5,6 +5,8 @@
 #include <conio.h>
 #define ARRAY_SIZE 256
 
+//UTILITY
+
 void stringtotextfile(char topic[]) { //change a str topic name to the file format
     int size = strlen(topic);
     if (topic[size - 1] == '\n') {
@@ -17,28 +19,54 @@ void stringtotextfile(char topic[]) { //change a str topic name to the file form
     topic[size + 4] = '\0';
 }
 
-void get_pass(char passw[]) { // ask and encrypt the password
-    char ch;
-    int i = 0;
-    while (1) {
-        ch = getch();
-        if (ch == 13 || ch == 9) { //Enter = 13 Tab = 9
-            passw[i] = '\0';
+//Check/Count
+int check_topic_exist(char topic[]) { // check if the topic is already exist or not
+    FILE* filepointer;
+    int find = 0;
+    char read[ARRAY_SIZE];
+    filepointer = fopen("topic.txt", "r");
+    while (fgets(read, ARRAY_SIZE, filepointer) != NULL) {
+        if (read[strlen(read) - 1] == '\n')
+            read[strlen(read) - 1] = '\0';
+        if (strcmp(read, topic) == 0) {
+            find = 1;
             break;
         }
-        else if (ch == 8) {//BKSP = 8
-            if (i > 0) {
-                i--;
-                printf("\b \b"); // \b = backspace
-            }
-        }
-        else {
-            passw[i++] = ch;
-            printf("*");
-        }
     }
-    printf("\n");
+    fclose(filepointer);
+    return find;
 }
+
+int countQ(char topic[]) {
+    char temp_topic[ARRAY_SIZE];
+    strcpy(temp_topic, topic);
+    stringtotextfile(temp_topic);
+    FILE* fp = fopen(temp_topic, "r");
+    char read[ARRAY_SIZE];
+    int count = 0;
+    if (fp == NULL) {
+        return -1;
+    }
+    else {
+        while (fgets(read, ARRAY_SIZE, fp) != NULL) {
+            fgets(read, ARRAY_SIZE, fp);
+            count++;
+        }
+        fclose(fp);
+        return count;
+    }
+}
+
+int checkTopicSyntax(char topic[]){
+    if(isupper(topic[0]) == 1){
+        return 0;
+    }
+    else{
+        return 1;
+    }
+}
+
+//Get
 
 void get_Q(char topic[], int num, char return_question[]) {
     char temp_topic[ARRAY_SIZE];
@@ -81,4 +109,26 @@ void get_A(char topic[], int num, char return_answer[]) {
         }
     }
     fclose(filepointer);     
+}
+
+
+//Display
+
+void dis_all_QandA(char topic[]) {
+    char temp_topic[ARRAY_SIZE], read[ARRAY_SIZE];
+    strcpy(temp_topic, topic);
+    stringtotextfile(temp_topic);
+    FILE *fp = fopen(temp_topic, "r");
+    int count = 1;
+    while(1){
+        if(fgets(read, ARRAY_SIZE, fp) == NULL){
+            break;
+        }
+        else{
+            printf("%d. %s", count, read);
+            fgets(read, ARRAY_SIZE, fp);
+            printf("Answer: %s", read);
+            count++;
+        }
+    }
 }

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include<time.h>
+#define ARRAY_SIZE 256
 
 void color(char *color_name){ // color set
     if(strcmp(color_name,"green") == 0){
@@ -73,7 +74,7 @@ void guide() {
 }
 
 int user_choice(char *text, int min_val, int max_val) { //choice format with /back func
-    char choice[100];
+    char choice[ARRAY_SIZE];
     while (1) {
         printf("%s", text);
         printf("If you want to go back enter '/back'\n");

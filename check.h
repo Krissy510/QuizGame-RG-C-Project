@@ -64,28 +64,5 @@ int check_value_match_arr(int val, int arr[], int size)
     return 0;
 }
 
-int check_ban(char str[]) {
-    int size = strlen(str);
-    for (int i = 0; i < size; i++) {
-        if (str[i] == '|')
-            return 1;
-    }
-    return 0;
-}
 
-int check_topic_exist(char topic[]) { // check if the topic is already exist or not
-    FILE* filepointer;
-    int find = 0;
-    char read[ARRAY_SIZE];
-    filepointer = fopen("topic.txt", "r");
-    while (fgets(read, ARRAY_SIZE, filepointer) != NULL) {
-        if (read[strlen(read) - 1] == '\n')
-            read[strlen(read) - 1] = '\0';
-        if (strcmp(read, topic) == 0) {
-            find = 1;
-            break;
-        }
-    }
-    fclose(filepointer);
-    return find;
-}
+

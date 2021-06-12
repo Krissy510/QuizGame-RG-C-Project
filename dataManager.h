@@ -7,7 +7,7 @@
 
 int check_user_exist(char *user) { // check if the user is already exist or not
     FILE* fp;
-    char buffer[ARRAY_SIZE], temp[ARRAY_SIZE];
+    char buffer[ARRAY_SIZE];
     int find = 0;
     fp = fopen("userdata.txt", "r");
     while (1) {
@@ -16,7 +16,7 @@ int check_user_exist(char *user) { // check if the user is already exist or not
             find = 1;
             break;
         }
-        if(fgets(temp, ARRAY_SIZE, (FILE*)fp) == NULL){
+        if(fgets(buffer, ARRAY_SIZE, fp) == NULL){
             break;
         }
     }
@@ -41,7 +41,7 @@ int check_match(char *username, char *password) { //check if user and passw matc
                 break;
             }
         }
-        if(fgets(temp, ARRAY_SIZE, (FILE*)fp) == NULL){
+        if(fgets(temp, ARRAY_SIZE, fp) == NULL){
             break;
         }
     }
@@ -79,4 +79,43 @@ void load_score(char username[],double *score, int *allq, int *cq, int *wq) {
         }
     }
     fclose(fp);
+}
+
+void regis_user_data(char username[], char password[]) { // register the data to database
+    FILE* fp;
+    fp = fopen("userdata.txt", "a"); // open the database in append mode
+    if (fp == NULL) { // check if there is the database file
+        system("cls");
+        color("red");
+        printf("Userdata is missing.\n");
+        color("reset");
+        system("pause");
+        fclose(fp);
+    }
+    else { // if the database file exist
+        fprintf(fp, "%s\t%s\t0\t0\t0\t0\n", username, password); //print out the format
+        fclose(fp); // close the file pointer
+    }
+}
+
+void del_data(char username[]) {
+    FILE* fp;
+    FILE* cpyfile;
+    char read_user[ARRAY_SIZE], read_else[ARRAY_SIZE];
+    cpyfile = fopen("temp_del.txt", "w");
+    fp = fopen("userdata.txt", "r");
+    while (1) { // copy except the given username
+        fscanf(fp,"%s", read_user);
+        if(fgets(read_else, ARRAY_SIZE, fp) == NULL){
+            break;
+        }
+        else if(strcmp(read_user, username) != 0){
+            fprintf(cpyfile, "%s%s", read_user, read_else);
+        }
+        
+    }
+    fclose(fp);
+    fclose(cpyfile);
+    remove("userdata.txt");
+    rename("temp_del.txt", "userdata.txt");
 }

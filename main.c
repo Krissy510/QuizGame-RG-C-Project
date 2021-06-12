@@ -1,10 +1,9 @@
-#include "strprocess.h"
 #include "rlg.h"
+#include "qaManager.h"
 
 int main(){
-    char username[ARRAY_SIZE] = "Kris510", password[ARRAY_SIZE] = ""; 
+    char username[ARRAY_SIZE] = "Test1", password[ARRAY_SIZE] = "Kris5105"; 
     char topic[ARRAY_SIZE] = "testTopic", question[ARRAY_SIZE] = "";
-    get_A(topic, 1, question);
-    printf("%s", question);
+    del_data(username);
     return 0;
 }

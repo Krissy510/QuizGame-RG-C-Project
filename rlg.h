@@ -6,7 +6,33 @@
 #include "dataManager.h"
 #define ARRAY_SIZE 256
 
-//register
+//UTILITY
+
+void get_pass(char passw[]) { // ask and encrypt the password
+    char ch;
+    int i = 0;
+    while (1) {
+        ch = getch();
+        if (ch == 13 || ch == 9) { //Enter = 13 Tab = 9
+            passw[i] = '\0';
+            break;
+        }
+        else if (ch == 8) {//backspace = 8
+            if (i > 0) {
+                i--;   // decrement so that the new character will overwrite
+                printf("\b \b"); // \b = del the character before in display
+            }
+        }
+        else {
+            passw[i++] = ch;
+            printf("*");
+        }
+    }
+    printf("\n");
+}
+
+
+//Register
 
 int take_username_reg(char *returnuser) { //ask user to for their username
     printf("Use only alphabet or numbers.\n");
@@ -81,6 +107,8 @@ int take_password_reg(char *return_password) {
         }
     }
 }
+
+//Login
 
 int take_username_log(char *returnuser) { //Ask user username for login
     while (1) {
