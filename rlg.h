@@ -118,7 +118,7 @@ int take_password_log(char username[], char return_password[]) { //Ask user pass
         }
         else{
             color("red");
-            printf("Incorrect please try again");
+            printf("Incorrect please try again\n");
             color("reset");
         }
     }

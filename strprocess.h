@@ -10,12 +10,11 @@ void stringtotextfile(char topic[]) { //change a str topic name to the file form
     if (topic[size - 1] == '\n') {
         size--;
     }
-    topic[size] = 'Q';
-    topic[size + 1] = '.';
-    topic[size + 2] = 't';
-    topic[size + 3] = 'x';
-    topic[size + 4] = 't';
-    topic[size + 5] = '\0';
+    topic[size] = '.';
+    topic[size + 1] = 't';
+    topic[size + 2] = 'x';
+    topic[size + 3] = 't';
+    topic[size + 4] = '\0';
 }
 
 void get_pass(char passw[]) { // ask and encrypt the password
@@ -39,4 +38,47 @@ void get_pass(char passw[]) { // ask and encrypt the password
         }
     }
     printf("\n");
+}
+
+void get_Q(char topic[], int num, char return_question[]) {
+    char temp_topic[ARRAY_SIZE];
+    strcpy(temp_topic, topic);
+    stringtotextfile(temp_topic);
+    int count = 1;
+    char read[ARRAY_SIZE];
+    FILE* filepointer = fopen(temp_topic, "r");
+    while (fgets(read, ARRAY_SIZE, filepointer) != NULL)
+    {
+        if (count == num) {//find the Q
+            strcpy(return_question, read);
+            break;
+        }
+        else{
+            fgets(read, ARRAY_SIZE, filepointer);
+            count++;
+        }
+    }
+    fclose(filepointer);        
+}
+
+void get_A(char topic[], int num, char return_answer[]) {
+    char temp_topic[ARRAY_SIZE];
+    strcpy(temp_topic, topic);
+    stringtotextfile(temp_topic);
+    int count = 1;
+    char read[ARRAY_SIZE];
+    FILE* filepointer = fopen(temp_topic, "r");
+    fgets(read, ARRAY_SIZE, filepointer);
+    while (fgets(read, ARRAY_SIZE, filepointer) != NULL)
+    {
+        if (count == num) {//find the Q
+            strcpy(return_answer, read);
+            break;
+        }
+        else{
+            fgets(read, ARRAY_SIZE, filepointer);
+            count++;
+        }
+    }
+    fclose(filepointer);     
 }

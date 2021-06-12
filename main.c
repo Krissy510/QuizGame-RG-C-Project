@@ -1,12 +1,10 @@
 #include "strprocess.h"
 #include "rlg.h"
 
-void display_info(double a, int b,int c, int d){
-    printf("a = %lf\nb = %d\nc = %d\nd = %d\n",a,b,c,d);
-}
-
 int main(){
-    char username[256] = "Kris510", password[256] = "";
-    take_password_log(username, password);
+    char username[ARRAY_SIZE] = "Kris510", password[ARRAY_SIZE] = ""; 
+    char topic[ARRAY_SIZE] = "testTopic", question[ARRAY_SIZE] = "";
+    get_A(topic, 1, question);
+    printf("%s", question);
     return 0;
 }
