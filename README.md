@@ -14,3 +14,6 @@ And I want to refactor my own code. Becuase it is very bad.
 8/6/2021
 # Estimated end date:
 28/6/2021
+# Change:
+1. Remove ranking system
+2. Improve data management
