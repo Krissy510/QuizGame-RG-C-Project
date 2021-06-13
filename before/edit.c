@@ -8,81 +8,6 @@ University: King Mongkut's Institute of Technology Ladkrabang
 */
 
 
-
-
-//file process func
-
-void update_user(char user[], char passw[], double score, double allq, int cq, int wq) { // find user and change their score at will
-    if (strcmp(user, "TEMP GUEST") == 0) // since guest don't have any data base anyway
-        return;
-    char* token;
-    FILE* fTemp, * fpdata;
-    fTemp = fopen("temp_cpy.csv", "w");
-    fpdata = fopen("userdata.csv", "r");
-    while (fgets(read, array_length, fpdata) != NULL) {
-        strcpy(temp, read); //copy so that read will not be damage
-        token = strtok(temp, ",");
-        if (strcmp(token, user) == 0) { // if user match
-            fprintf(fTemp, "%s,", token); //copy username to the temp file
-            token = strtok(NULL, ",");//pass the password
-            fprintf(fTemp, "%s,", passw);//write new password
-            fprintf(fTemp, "%lf,%lf,%d,%d\n", score, allq, cq, wq); //write new score
-        }
-        else // if user not match then copy the whole data to the temp file
-            fprintf(fTemp, "%s", read);
-    }
-    fclose(fpdata);
-    fclose(fTemp);
-    remove("userdata.csv"); //delete old data base
-    rename("temp_cpy.csv", "userdata.csv"); // rename the temp file to be the new database
-    sortLeader();
-}
-
-//medium func
-int regis() { // final func for reg
-    system("cls");
-    while (1) {
-        if (take_username_reg(currentuser.username) == -1) //go back to rlg
-            return -1;
-        else if (take_password_reg(currentuser.password) == -1) //go back to username reg
-            system("cls");
-        else // take password and user name has been succeed
-            break;
-    }
-    system("cls");
-    regis_user_data(currentuser.username, currentuser.password);
-    currentuser.wq, currentuser.cq = 0, 0;
-    currentuser.allq, currentuser.score = 0, 0;
-    printf("\033[0;32mSuccesfully register user as %s\033[0m\n", currentuser.username);
-    delay(1);
-    return 1; //finished all process
-}
-int login() { //final func for login
-    while (1) { // big loop to catch if not match
-        while (1) { // loop for getting user and password
-            if (take_username_log(currentuser.username) == -1)
-                return -1; //user wants to go back to rlg
-            else if (take_password_log(currentuser.username, currentuser.password) == -1)
-                system("cls");//user wants to go back to take user log
-            else // The format of username or password is correct
-                break;
-        }
-        system("cls");
-        if (check_match(currentuser.username, currentuser.password) == 1) //if check that they matched
-            break;
-        else if (strcmp(currentuser.username, admin.username) == 0 && strcmp(currentuser.password, admin.password) == 0) {
-            return 1; //ADMIN login
-        }
-        else { // the user and password doesn't match
-            printf("\033[0;34mSorry, incorrect Username or Password.\033[0m\nPlease try again.\n");
-        }
-    }
-    load_score_temp(currentuser.username);//load the user's score
-    load_score_current();
-    printf("\033[0;32mSuccessfully login user as %s\033[0m\n", currentuser.username); // display a confirm message
-    delay(1);
-    return 1;//Finished
-}
 void guest() {
     strcpy(currentuser.username, "TEMP GUEST");
     currentuser.wq, currentuser.cq = 0, 0;
@@ -131,28 +56,6 @@ void dis_user_info() {
     }
     else
         printf("Correct Percentage: %02.2lf %%\n", (tempuser.cq / tempuser.allq) * 100);
-    system("pause");
-    system("cls");
-}
-void disleaderboard() { //dafuq
-    FILE* filepointer;
-    double readscore;
-    system("cls");
-    int count = 1;
-    filepointer = fopen("userdata.csv", "r");
-    char* token;
-    while (fgets(read, array_length, filepointer) != NULL && count < 11) {
-        token = strtok(read, ",");
-        if (read[0] != '\n') {
-            printf("Rank:%d\nUsername:%s\n", count, token);
-            token = strtok(NULL, ",");
-            token = strtok(NULL, ",");
-            readscore = strtod(token, NULL);
-            printf("Total_score: %02.2lf\n\n", readscore);
-            count++;
-        }
-    }
-    fclose(filepointer);
     system("pause");
     system("cls");
 }

@@ -4,6 +4,15 @@
 #include<time.h>
 #define ARRAY_SIZE 256
 
+struct User {
+    char username[ARRAY_SIZE];
+    char password[ARRAY_SIZE];
+    double score;
+    int allq;
+    int correctq;
+    int wrongq;
+};
+
 void color(char *color_name){ // color set
     if(strcmp(color_name,"green") == 0){
         printf("\033[0;32m");
@@ -14,9 +23,13 @@ void color(char *color_name){ // color set
     else if(strcmp(color_name,"cyan") == 0){
         printf("\033[0;36m");
     }
+    else if(strcmp(color_name,"yellow") == 0){
+        printf("\033[0;33m");
+    }
     else if(strcmp(color_name,"reset") == 0){
         printf("\033[0m");
     }
+    
 }
 
 void welcome(char *username) { // show a warm welcome to the current user
@@ -30,7 +43,7 @@ void welcome(char *username) { // show a warm welcome to the current user
     color("reset");
 }
 
-void delay(int number_of_seconds)
+void delay(double number_of_seconds)
 {
     clock_t end_time;
     end_time =  clock() + (1000 * number_of_seconds); // Storing end time
@@ -88,4 +101,35 @@ int user_choice(char *text, int min_val, int max_val) { //choice format with /ba
                 return check;
         }
     }
+}
+
+void dis_user_info(char given_user[]) {
+    struct User temp;
+    strcpy(temp.username, given_user);
+    load_score(&temp);
+    printf("Username: %s\n", temp.username);
+    printf("Total_score: %.2lf\n", temp.score);
+    printf("All Q: %d\n", temp.allq);
+    color("green");
+    printf("Correct Q: %d\n", temp.correctq);
+    color("red");
+    printf("Wrong Q: %d\n", temp.wrongq);
+    color("reset");
+    system("pause");
+    system("cls");
+}
+
+void dis_guest_info(struct User givenGuest){
+    color("yellow");
+    printf("Current\n");
+    color("reset");
+    printf("Total_score: %.2lf\n", givenGuest.score);
+    printf("All Q: %d\n", givenGuest.allq);
+    color("green");
+    printf("Correct Q: %d\n", givenGuest.correctq);
+    color("red");
+    printf("Wrong Q: %d\n", givenGuest.wrongq);
+    color("reset");
+    system("pause");
+    system("cls");
 }

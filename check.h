@@ -4,20 +4,6 @@
 #include <ctype.h>
 #define ARRAY_SIZE 256
 
-void checkessfile() { //Check if the essential file is there
-    FILE* check1, * check2, * check3;
-    check1 = fopen("userdata.txt", "r");
-    check2 = fopen("topic.txt", "r");
-    if (check1 == NULL) {
-        check1 = fopen("userdata.csv", "w"); //if not create it
-    }
-    if (check2 == NULL) {
-        check2 = fopen("topic.txt", "w");//if not create it
-    }
-    fclose(check1);
-    fclose(check2);
-}
-
 int check_contain_sp(char str[]) { //check if there is any special characters in the str
     for (int i = 0; i < strlen(str); i++) {
         if(isalnum(str[i]))
