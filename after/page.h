@@ -1,5 +1,13 @@
-#include "subpage.h"
+/*
+ID: 63011293
+Name: Raviphas Sananpanichkul
+Midterm Project
+C PROGRAMMING
+Teacher: Ukrit Watchareeruetai
+University: King Mongkut's Institute of Technology Ladkrabang
+*/
 
+#include "subpage.h"
 
 int playPage(char topicChoose[], int *qa_Amount, int *mode_Select){
     int process;

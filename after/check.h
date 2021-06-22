@@ -1,3 +1,12 @@
+/*
+ID: 63011293
+Name: Raviphas Sananpanichkul
+Midterm Project
+C PROGRAMMING
+Teacher: Ukrit Watchareeruetai
+University: King Mongkut's Institute of Technology Ladkrabang
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
