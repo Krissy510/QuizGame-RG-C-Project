@@ -8,57 +8,8 @@ University: King Mongkut's Institute of Technology Ladkrabang
 */
 
 
-void guest() {
-    strcpy(currentuser.username, "TEMP GUEST");
-    currentuser.wq, currentuser.cq = 0, 0;
-    currentuser.allq, currentuser.score = 0, 0;
-}
-int change_ps(char username[], char password[], double score, double allq, int cq, int wq) {
-    char passw[100];
-    while (1)
-    {
-        printf("Enter '/menu' to go back to the menu.\n");
-        printf("Please enter the current password: ");
-        get_pass(temp);
-        if (strcmp(temp, "/menu") == 0)
-            return 1;
-        else if (strcmp(temp, password) == 0) { // user confirm successful
-            if (take_password_reg(passw) == 1)
-                break;
-        }
-        system("cls");
-    }
-    update_user(username, passw, score, allq, cq, wq);
-    strcpy(password, passw);
-    printf("\033[0;32mSucessfully change password\033[0m\n");
-    delay(1);
-    return 1;
-}
-void dis_user_info() {
-    struct usinfo temp;
-    system("cls");
-    while (1)
-    {
-        if (take_username_log(temp.username) == -1)
-            return; //user wants to go back to the menu
-        else
-            break;
-    }
-    load_score_temp(temp.username);
-    printf("Rank: %d\n", get_rank(temp.username));
-    printf("Username: %s\n", temp.username);
-    printf("Total_score: %02.2lf\n", tempuser.score);
-    printf("All Q: %.0lf\n", tempuser.allq);
-    printf("\033[0;32mCorrect Q: %d\033[0m\n", tempuser.cq);
-    printf("\033[1;31mWrong Q: %d\033[0m\n", tempuser.wq);
-    if (tempuser.allq == 0) {
-        printf("Percent Correct: %02.2lf %%\n", 0);
-    }
-    else
-        printf("Correct Percentage: %02.2lf %%\n", (tempuser.cq / tempuser.allq) * 100);
-    system("pause");
-    system("cls");
-}
+
+
 
 //gamemode
 void quiz(char topic[], int am_q, int* p_q) {
@@ -428,37 +379,6 @@ int play() {
     }
 }
 
-//menu
-void menu() {
-    while (1)
-    {
-        int usin = user_choice("MENU\n(1)Play\n(2)Guide\n(3)User Info\n(4)Leader board\n(5)Change account\n(6)Change password\n(7)Exit\n", 1, 7);
-        if (usin == 1)
-            play();
-        else if (usin == 2)
-            guide();
-        else if (usin == 3)
-            dis_user_info();
-        else if (usin == 4)
-            disleaderboard();
-        else if (usin == 5 || usin == -1)
-            rlg();
-        else if (usin == 6) {
-            if (strcmp("TEMP GUEST", currentuser.username) == 0) {
-                printf("\033[0;31mSorry, but you're a guest you can't change any password.\033[0m\n");
-                delay(1);
-            }
-            else
-                change_ps(currentuser.username, currentuser.password, currentuser.score, currentuser.allq, currentuser.cq, currentuser.wq);
-        }
-        else if (usin == 7)
-            end_message();
-        if (strcmp(admin.username, currentuser.username) == 0)
-            break;
-        system("cls");
-    }
-
-}
 
 //editor func
 int dis_all_top() {
@@ -484,64 +404,7 @@ int dis_all_top() {
     }
     return count;
 }
-void delete_topic(int num_del) {
-    FILE* fp, * fpdel;
-    char del_name[array_length];
-    int count = 1;
-    fpdel = fopen("temp_top_del.txt", "w");
-    fp = fopen("topic.txt", "r");
-    char read[array_length];
-    while (fgets(read, array_length, fp) != NULL) {
-        if (count != num_del) {
-            fprintf(fpdel, "%s", read);
-        }
-        else if (count == num_del) {
-            strcpy(del_name, read);
-        }
-        count++;
-    }
-    fclose(fp);
-    fclose(fpdel);
-    remove("topic.txt");
-    rename("temp_top_del.txt", "topic.txt");
-    change_topictofile(del_name);
-    remove(del_name);
-}
-int create_topic() {
-    system("cls");
-    FILE* fp;
-    char topname[array_length];
-    while (1) {
-        printf("Enter '/back' to go back.\n");
-        printf("The topic shouldn't be longer than 99 charaters.\n");
-        printf("The topic shouldn't contain any special characters.\n");
-        printf("Topic's name: ");
-        gets(topname);
-        if (strcmp(temp, "/back") == 0)
-            return -1;
-        else if (check_topic_exist(topname) == 1)
-        {
-            system("cls");
-            printf("\033[0;31mSorry, but this topic is already taken.\033[0m\n");
-        }
-        else if (check_if_sp(topname) == 1) {
-            system("cls");
-            printf("\033[0;31mSorry, but this name is in valid.\033[0m\n");
-        }
-        else
-        {
-            system("cls");
-            break;
-        }
-    }
-    fp = fopen("topic.txt", "a");
-    fprintf(fp, "%s\n", topname);
-    fclose(fp);
-    change_topictofile(topname);
-    fp = fopen(topname, "w");
-    fclose(fp);
-    return 1;
-}
+
 void clear_score() {
     if (user_choice("Are you sure you want to clear all user's score?\n(1)Yes or (2)No\n", 1, 2) == 1) {
         FILE* fTemp, * filepointer;
@@ -566,41 +429,7 @@ void clear_score() {
     else
         return;
 }
-int force_change_ps() {
-    struct usinfo temp;
-    while (1)
-    {
-        if (take_username_log(temp.username) == -1)
-            return -1; //user wants to go back to the menu
-        else {
-            if (take_password_reg(temp.password) == 1)
-                break;
-            else //user wants to go change username
-                system("cls");
-        }
 
-    }
-    load_score_temp(temp.username);
-    update_user(temp.username, temp.password, tempuser.score, tempuser.allq, tempuser.cq, tempuser.wq);
-    printf("\033[0;32mSucessfully change password\033[0m\n");
-    delay(1);
-    return 1;
-}
-void get_user_pass(char user[], char rechar[]) {
-    FILE* filepointer;
-    filepointer = fopen("userdata.csv", "r");
-    char* token;
-    while (fgets(read, array_length, filepointer) != NULL)
-    {
-        token = strtok(read, ",");
-        if (strcmp(user, token) == 0) {
-            token = strtok(NULL, ",");
-            strcpy(rechar, token);
-            break;
-        }
-    }
-    fclose(filepointer);
-}
 int edit_topic() {
     system("cls");
     while (1)
@@ -1005,46 +834,6 @@ void clear_data() {
         green();
         printf("Successfully clear all data.\n");
         reset_color();
-    }
-}
-void load_admin() {
-    FILE* fp = fopen("admin.txt", "r");
-    char* token;
-    fgets(read, 100, fp);
-    token = strtok(read, "|");
-    strcpy(admin.username, token);
-    token = strtok(NULL, "\n");
-    strcpy(admin.password, token);
-    fclose(fp);
-}
-int change_admin_name() {
-    char usin[100];
-    printf("If you want to go back enter '/back'\n");
-    printf("New admin's name: ");
-    gets(usin);
-    system("cls");
-    if (strcmp(usin, "/back") == 0)
-        return -1;
-    else {
-        strcpy(admin.username, usin);
-        strcpy(currentuser.username, usin);
-        FILE* fp = fopen("admin.txt", "w");
-        fprintf(fp, "%s|%s", admin.username, admin.password);
-        fclose(fp);
-        return 1;
-    }
-}
-int change_admin_pass() {
-    char usin[100];
-    if (take_password_reg(usin) == -1)
-        return -1;
-    else {
-        strcpy(admin.password, usin);
-        strcpy(currentuser.password, usin);
-        FILE* fpc = fopen("admin.txt", "w");
-        fprintf(fpc, "%s|%s", admin.username, admin.password);
-        fclose(fpc);
-        return 1;
     }
 }
 

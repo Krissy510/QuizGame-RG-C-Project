@@ -67,38 +67,61 @@ void end_message() {
     color("reset");
 }
 
-void guide() {
-    printf("Introduction:\nKris's PG quiz game is a quiz game that was built to resemble an online-quizgame.\n");
-    printf("That includes userdata and rank that players can use to compete each other.\n");
-    printf("Or you could this program to help you memorize some topic easier while being entertained.\n");
-    printf("\nEdit:\nTo edit topic and Q&A please use the admin account which can be found in the same folder as the program.\n");
-    printf("\nGameplay:\n(1)Normal Quiz Game(x1.00)\nA gamemode that is straight forward enough.\n");
-    printf("Its the game mode where it will ask question and give you\n4 choices to choose which 1 of them is the only answer.\n");
-    printf("If you answer correct you get points.\n\n(2)Time attack(x1.5)\n");
-    printf("Similar to Normal quiz game but now every time it displays a question\nyou have only 3 seconds to answer the question correctly.\n");
-    printf("You will get a score when you answer the question correctly and also\nwithin 3 seconds. Hard isn't it?\n");
-    printf("However, you got 15% percent bonus of your score.\nHard = Rewarding?\n\n(3)Type it out!(x0.00)\n");
-    printf("This game mode purpose was to train you for all the quizgame and what is the best way to\n");
-    printf(" train your memorization than typing it out!\n\n(4)Blink of an eye(x2.00)\n");
-    printf("Also similar to normal quiz game but this time it will force your memorization to the limit!\n");
-    printf("In this gamemode when it display a question and 4 choices you have only to memorize what is \n");
-    printf("the answer of the question is and answer it.\nBut as I said the harder it is the rewarding it is.\n");
-    printf("Therefore, this gamemode will give you up to double of the amount of score that you get by\nplaying normal quiz game.\n");
+void guide(int mode) {
+    // mode = 0 menu
+    // mode = 1 editor
+    if(mode == 0){
+        printf("Introduction:\nKris's PG quiz game is a quiz game that was built to resemble an online-quizgame\n");
+        printf("or you could this program to help you memorize some topic easier while being entertainment.\n");
+        system("pause");
+        system("cls");
+        printf("Gameplay:\n");
+        printf("(1)Normal Quiz Game\nScore: x1\nA gamemode that is straight forward enough.\n");
+        printf("Its the game mode where it will ask question and give you\n4 choices to choose which 1 of them is the only answer.\n");
+        system("pause");
+        system("cls");
+        printf("(2)Type it out!\nScore: x4\n");
+        printf("This game mode purpose was to train you for all the quizgame and what is the best way to\n");
+        printf("Train your memorization by typing it out!\n\n");
+        system("pause");
+        system("cls");
+        printf("(3)Blink of an eye\nScore: x3.5\n");
+        printf("Also similar to normal quiz game but this time it will force your memorization to the limit!\n");
+        printf("In this gamemode the program will display a question and 4 choices for only 3 seconds then dissapear after the time\n");
+        printf("Then you will try to enter the correct answer.\n");
+        system("pause");
+        system("cls");
+        color("yellow");
+        printf("Hope you enjoy the game!\n");
+        color("reset");
+        system("pause");
+        system("cls");
+    }
+    if(mode == 1){
+        printf("Editor:\n\nEdit\n-Where you can edit the topic or Q&A\n\n");
+        printf("Force Change Password\n-Change user password\n\n");
+        printf("Clear/Remove\n-Clear or Remove user data\n\n");
+        system("pause");
+        system("cls");
+    }
+    
 }
 
 int user_choice(char *text, int min_val, int max_val) { //choice format with /back func
     char choice[ARRAY_SIZE];
     while (1) {
         printf("%s", text);
-        printf("If you want to go back enter '/back'\n");
         gets(choice);
         system("cls");
-        if (strcmp(choice, "/back") == 0)// if the user wants to go back
+        if (strcmp(choice, "/back") == 0 || strcmp(choice, "/quit") == 0 )// if the user wants to go back
             return -1;
-        if (strlen(choice) == 1) {
-            int check = atoi(choice);
-            if (check <= max_val && check >= min_val)
-                return check;
+        int check = atoi(choice);
+        if (check <= max_val && check >= min_val)
+            return check;
+        else{
+            color("red");
+            printf("Please enter only in the given choice\n");
+            color("reset");
         }
     }
 }
@@ -107,7 +130,9 @@ void dis_user_info(char given_user[]) {
     struct User temp;
     strcpy(temp.username, given_user);
     load_score(&temp);
+    color("cyan");
     printf("Username: %s\n", temp.username);
+    color("reset");
     printf("Total_score: %.2lf\n", temp.score);
     printf("All Q: %d\n", temp.allq);
     color("green");
@@ -115,13 +140,13 @@ void dis_user_info(char given_user[]) {
     color("red");
     printf("Wrong Q: %d\n", temp.wrongq);
     color("reset");
-    system("pause");
-    system("cls");
 }
 
-void dis_guest_info(struct User givenGuest){
+void dis_current_info(struct User givenGuest){
     color("yellow");
     printf("Current\n");
+    color("cyan");
+    printf("Username: %s\n", givenGuest.username);
     color("reset");
     printf("Total_score: %.2lf\n", givenGuest.score);
     printf("All Q: %d\n", givenGuest.allq);
@@ -130,6 +155,17 @@ void dis_guest_info(struct User givenGuest){
     color("red");
     printf("Wrong Q: %d\n", givenGuest.wrongq);
     color("reset");
-    system("pause");
-    system("cls");
+}
+
+void error_message(int type){
+    if(type == 0){
+        color("red");
+        printf("Please enter only in the given choice\n");
+        color("reset");
+    }
+    else if(type == 1){
+        color("red");
+        printf("User does not exist.\n");
+        color("reset");
+    }
 }

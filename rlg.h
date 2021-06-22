@@ -127,7 +127,7 @@ int take_username_log(char *returnuser) { //Ask user username for login
         else{
             color("red");
             if (check_user_exist(returnuser) == 0)
-                printf("This user does not exist!\n");
+                error_message(1);
             else if (check_contain_sp(returnuser) == 1)
                 printf("Please use only alphabet or numbers.\n");
         }
@@ -145,7 +145,7 @@ int take_password_log(char username[], char return_password[]) { //Ask user pass
         if (strcmp(return_password, "/back") == 0)
             return -1;
         else if(check_match(username,return_password) == 1){
-            break;
+            return 1;
         }
         else{
             color("red");
@@ -153,15 +153,16 @@ int take_password_log(char username[], char return_password[]) { //Ask user pass
             color("reset");
         }
     }
-    return 1;
 }
 
 
 //main function
 int registerUser(struct User *givenUser){
     while(1){
-        if (take_username_reg(givenUser->username) == -1) //go back to rlg
-            return -1;
+        if (take_username_reg(givenUser->username) == -1){
+            system("cls"); 
+            return -1;//go back to rlg
+        }
         else if (take_password_reg(givenUser->password) == -1) //go back to username reg
             system("cls");
         else // take password and user name has been succeed
@@ -180,7 +181,6 @@ int registerUser(struct User *givenUser){
 }
 
 int login(struct User *givenUser){
-    
     while (1) { // loop for getting user and password
         if (take_username_log(givenUser->username) == -1)
             return -1; //user wants to go back to entry page

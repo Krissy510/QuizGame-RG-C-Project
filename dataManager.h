@@ -9,6 +9,8 @@
 
 //Check
 int check_user_exist(char *user) { // check if the user is already exist or not
+    if(strlen(user) == 0)
+        return 0;
     FILE* fp;
     char buffer[ARRAY_SIZE];
     int find = 0;
@@ -78,6 +80,24 @@ void load_score(struct User *given_user) {
     fclose(fp);
 }
 
+void getPass(char user[], char returnPass[]) {
+    char buffer[ARRAY_SIZE];
+    FILE* fp;
+    fp = fopen("userdata.txt", "r");
+    while (1){
+        fscanf(fp,"%s",buffer);
+        if (strcmp(buffer, user) == 0){
+            fscanf(fp,"%s",buffer); // skip password
+            strcpy(returnPass,buffer);
+            break;
+        }
+        else{
+            fgets(buffer, ARRAY_SIZE, fp);
+        }
+    }
+    fclose(fp);
+}
+
 
 //Add data
 void regis_user_data(char username[], char password[]) { // register the data to database
@@ -121,27 +141,30 @@ void del_data(char username[]) {
 }
 
 //edit data for the given user
-void update_user(struct User givenUser) {
+void update_user(struct User givenUser, int mode) {
+    // mode 0 = normal no update password
+    // mode 1 = editor update password
     FILE* fp;
     FILE* cpyfile;
-    char read_user[ARRAY_SIZE], read_else[ARRAY_SIZE];
+    char read_user[ARRAY_SIZE], read_else[ARRAY_SIZE], check[ARRAY_SIZE]="";
     cpyfile = fopen("temp_del.txt", "w");
     fp = fopen("userdata.txt", "r");
     while (1) { // copy except the given username
         fscanf(fp,"%s", read_user);
-        if(strcmp(read_user, givenUser.username) == 0){
+        if(strcmp(read_user, check) == 0){
+            break;
+        }
+        else if(strcmp(read_user, givenUser.username) == 0){
             fprintf(cpyfile, "%s\t", read_user); // write same username
-            if(strcmp("None", givenUser.password) == 0){
+            if(mode == 0){
                 fscanf(fp,"%s", read_user); // read password
                 fprintf(cpyfile, "%s\t", read_user); // wrtie same password
             }
-            else{
+            else if (mode == 1){
                 fprintf(cpyfile, "%s\t", givenUser.password);
             }
             fprintf(cpyfile,"%.2lf\t%d\t%d\t%d\n",givenUser.score,givenUser.allq,givenUser.correctq,givenUser.wrongq); // wrtie new data
-            if(fgets(read_else, ARRAY_SIZE, fp) == NULL){
-                break;
-            }
+            fgets(read_else, ARRAY_SIZE, fp);
         }
         else{
             if(fgets(read_else, ARRAY_SIZE, fp) == NULL){
@@ -151,6 +174,7 @@ void update_user(struct User givenUser) {
                 fprintf(cpyfile, "%s%s", read_user, read_else);
             }
         }
+        strcpy(check, read_user);
     }
     fclose(fp);
     fclose(cpyfile);
