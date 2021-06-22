@@ -41,7 +41,7 @@ int take_username_reg(char *returnuser) { //ask user to for their username
     gets(returnuser); // ask for a new user name
     if (strcmp(returnuser, "/back") == 0)  // if user want to go back to the choosing of login regis or guest
         return -1;
-    if (check_user_exist(returnuser) == 1 || check_contain_sp(returnuser) == 1 || strlen(returnuser) == 0)
+    if (check_user_exist(returnuser) == 1 || check_contain_sp(returnuser) == 1 || strlen(returnuser) == 0 || strcmp(returnuser, "Guest") == 0)
         while (1) {
             system("cls");
             color("red");
@@ -52,6 +52,9 @@ int take_username_reg(char *returnuser) { //ask user to for their username
                 printf("Please use only alphabet or numbers.\n");
             else if(strlen(returnuser) == 0)
                 printf("Username cannot be empty.\n");
+            else if(strcmp(returnuser, "Guest") == 0){
+                printf("Guest is not allowed to login.\n");
+            }
             color("reset");
             printf("If you want to go back enter '/back'\n");
             printf("Username:");
