@@ -1,5 +1,2 @@
 Guest	Guest	0	0	0	0
 root	toor	0	0	0	0
-test	f	20.00	30	5	5
-test1   Test1   1   2   3   4
-test2	Test1	0	0	0	0
